@@ -5,7 +5,19 @@ ui <- fluidPage( #fluidPage automatically adapts the content to the browser wind
   
   sidebarLayout(
     position = "right",
-    sidebarPanel("sidebar panel"), #sidebar is for input. This is a function! it shows what you put in the argument
+    sidebarPanel(
+      "sidebar panel",
+      br(),
+      #Widgets from tut lesson 3
+      p("Widgets from tut lesson 3"),
+      selectInput("choiceBoxInput",label = h3("Pick one"), choices = list("Blue pill" = 0, "Red pill" = 1), selected = 0),
+      br(),
+      sliderInput("sliderInput", label=h3("Which range?"), min= 0, max =100, value = c(20,90),)
+      
+      
+      
+      
+      ), #sidebar is for input. This is a function! it shows what you put in the argument
     mainPanel(#this is for output
       h1("First level Title") , 
       h2("Second level title"), 
@@ -25,7 +37,10 @@ ui <- fluidPage( #fluidPage automatically adapts the content to the browser wind
       p("A remote image:"),
       img(src="https://www.androidcentral.com/sites/androidcentral.com/files/styles/large/public/article_images/2015/08/dont-panic.jpg?itok=Eskz_M2z"),
       p("A local image:"),
-      img(src="zaphod.gif")
+      img(src="zaphod.gif"),
+      br(),
+      h2("We can even use audio!"),
+      tags$audio(src="http://www.induceddyslexia.com/documents/HitchHikersGuide-01.mp3", type = "audio/mp3",  controls = TRUE)
       
       
       ) 
