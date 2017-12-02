@@ -37,7 +37,7 @@ ui <- fluidPage( #fluidPage automatically adapts the content to the browser wind
       p("A remote image:"),
       img(src="https://www.androidcentral.com/sites/androidcentral.com/files/styles/large/public/article_images/2015/08/dont-panic.jpg?itok=Eskz_M2z"),
       p("A local image:"),
-      img(src="zaphod.gif"),
+      img(src="zaphod.gif"), #local images must be put in the "www" folder
       br(),
       h2("We can even use audio!"),
       tags$audio(src="http://www.induceddyslexia.com/documents/HitchHikersGuide-01.mp3", type = "audio/mp3",  controls = TRUE)
