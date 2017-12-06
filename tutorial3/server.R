@@ -9,7 +9,7 @@ counties <- readRDS("data/counties.bin") #if we do not plan to modify this df (f
 shinyServer(function(input, output) {
   output$map <- renderPlot({
     legend = ""
-    stuff <- switch(input$var,
+    params <- switch(input$var,
                        "Percent White" = 
                          {
                            list(
@@ -43,7 +43,7 @@ shinyServer(function(input, output) {
                           )
                         }
     )
-    percent_map(var = stuff[[1]], stuff[[2]], stuff[[3]],input$range[1], input$range[2])
+    percent_map(var = params[[1]], params[[2]], params[[3]],input$range[1], input$range[2])
   })
   
 })
