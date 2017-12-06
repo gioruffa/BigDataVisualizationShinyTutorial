@@ -42,7 +42,7 @@ In practice:
 * Only place code that Shiny must rerun to build an object inside of a render* function. Shiny will rerun all of the code in a render* chunk each time a user changes a widget mentioned in the chunk. This can be quite often.
 
 ### Important note on deployment
-The R code is run on the server (real server, the one in "the cloud") NOT INSIDE THE JS CONSOLE OF THE BROWSER (as I (Giorgio) originally thought)! So you need to install all the R dependencies on the server. This scares me a little when thinking to real world deploymnet, aka not on a laptop but on server with a public IP, because of possible security problems in case of bugs and exploit in the R code, which I do not think is reviewed from a security standpoint.
+The R code is run on the server (real server, the one in "the cloud") NOT INSIDE THE JS CONSOLE OF THE BROWSER (as I (Giorgio) originally thought)! So you need to install all the R dependencies on the server. This scares me a little when thinking to real world deployment, a.k.a. not on a laptop but on server with a public IP, because of possible security problems in case of bugs and exploit in the R code, which I do not think is reviewed from a security standpoint.
 
 ### Other remarks:
 
