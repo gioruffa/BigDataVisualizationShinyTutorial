@@ -1,0 +1,31 @@
+
+Considerations on local file locations:
+
+- Put stuff in www to work with html tags
+
+- "Both source and readRDS require a file path, and file paths do not behave the same way in a Shiny app as they do at the command line."
+In other cases, the reference location (the "root") is the location of server.R file
+
+- server function is run once per user first request (i guess they use cookies to keep session tracking)
+- inside each render the code is run for every user interaction with the referenced widget
+
+Resume on function run:
+* The shinyApp function is run once, when you launch your app
+* The server function is run once each time a user visits your app
+* The R expressions inside render* functions are run many times. Shiny runs them once each time a user change the value of a widget.
+
+In practice:
+* Source scripts, load libraries, and read data sets at the beginning of app.R outside of the server function. Shiny will only run this code once, which is all you need to set your server up to run the R expressions contained in server.
+* Define user specific objects inside server function, but outside of any render* calls. These would be objects that you think each user will need their own personal copy of. For example, an object that records the user’s session information. This code will be run once per user.
+* Only place code that Shiny must rerun to build an object inside of a render* function. Shiny will rerun all of the code in a render* chunk each time a user changes a widget mentioned in the chunk. This can be quite often.
+
+Important note:
+The R code is run on the server (real server, the one in "the cloud") NOT INSIDE THE JS CONSOLE OF THE BROWSER! -> Need to install all the R dependencies on the server (which scares me a little because of possible security problems in case of bugs and exploit in the R code, which I do not think is reviewed from a security standpoint).
+
+Other remarks:
+The R Switch statement is kind of limited. If you want to set multiple variables you need multiple switches, which means that in the case you want to change the label you must change everything -> not so good.
+It also seems very difficult to use the switch to return a list and assing the content of the list to multiple values. 
+Example in python:
+data,color = counties$White, "darkgreen"
+The solution may require a ton of boilerplate code: https://strugglingthroughproblems.wordpress.com/2010/08/27/matlab-style-multiple-assignment-in%C2%A0r/ or https://stackoverflow.com/questions/7519790/assign-multiple-new-variables-on-lhs-in-a-single-line-in-r
+Our solution was to use a list in a single switch statement, containing the ordered set of arguments. A map would be cool, and then it would be possible to translate the map to the arguments with a kwargs (python) like function (I am sure it is possible but I am not proficient enough with R).

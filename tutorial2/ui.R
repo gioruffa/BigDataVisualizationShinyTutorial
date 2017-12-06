@@ -19,7 +19,7 @@ shinyUI(fluidPage(
       helpText("Create demographic maps with 
                information from the 2010 US Census."),
       
-      selectInput("var", 
+      selectInput("variableHook", #this is the name of the variable to retrieve in the server code
                   label = "Choose a variable to display",
                   choices = c("Percent White", 
                               "Percent Black",
@@ -27,13 +27,16 @@ shinyUI(fluidPage(
                               "Percent Asian"),
                   selected = "Percent White"),
       
-      sliderInput("range", 
+      sliderInput("rangeHoock", #We are using the name Hook just because this is a tutorial  
                   label = "Range of interest:",
                   min = 0, max = 100, value = c(0, 100))
     ),
     
     mainPanel(
-      textOutput("selected_var")
+      textOutput("selected_varHook"), #any output element takes as a first argument the name of the hook
+      textOutput("selected_rangeHook"),
+      #maybe it is better to put all in a single html and let's see how it goes XD
+      htmlOutput("selected_all_HTML_Hook")
     )
   )
   
