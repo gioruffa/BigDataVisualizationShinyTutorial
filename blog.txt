@@ -1,38 +1,66 @@
+# BigData Visualization Blog
 
-Considerations on local file locations:
+## Giorgio Ruffa and Fernando Diaz
 
-- Put stuff in www to work with html tags
+## Introduction
+The content of this document may seem rought or displaced in some points. 
+It is because of its nature of a blog (not a report), hence it reflects the learning process that,
+in our experience, rarely appears to be linear and smoothless, regardless of the subject.
 
-- "Both source and readRDS require a file path, and file paths do not behave the same way in a Shiny app as they do at the command line."
+We tried to avoid swear words or very inappropriate comment, but we cannot
+guarantee that the code will be totally esent from them.
+
+That said, in the following you will find notes and considerations on the
+exercises requested.
+
+This is a markdown document, it can be compiled to produce a fancy HTML output.
+
+## Exercise 1
+
+Note that the structure proposed in the tutorial was not followed strictly, the name of the folders are different and also the content of 
+the code may differ.
+
+### Considerations on local file locations:
+
+Put stuff in "www" to work with html tags.
+
+"Both source and readRDS require a file path, and file paths do not behave the same way in a Shiny app as they do at the command line."
 In other cases, the reference location (the "root") is the location of server.R file
 
-- server function is run once per user first request (i guess they use cookies to keep session tracking)
-- inside each render the code is run for every user interaction with the referenced widget
+### Function runtime execution
 
 Resume on function run:
+
 * The shinyApp function is run once, when you launch your app
 * The server function is run once each time a user visits your app
 * The R expressions inside render* functions are run many times. Shiny runs them once each time a user change the value of a widget.
 
 In practice:
+
 * Source scripts, load libraries, and read data sets at the beginning of app.R outside of the server function. Shiny will only run this code once, which is all you need to set your server up to run the R expressions contained in server.
 * Define user specific objects inside server function, but outside of any render* calls. These would be objects that you think each user will need their own personal copy of. For example, an object that records the user’s session information. This code will be run once per user.
 * Only place code that Shiny must rerun to build an object inside of a render* function. Shiny will rerun all of the code in a render* chunk each time a user changes a widget mentioned in the chunk. This can be quite often.
 
-Important note:
-The R code is run on the server (real server, the one in "the cloud") NOT INSIDE THE JS CONSOLE OF THE BROWSER! -> Need to install all the R dependencies on the server (which scares me a little because of possible security problems in case of bugs and exploit in the R code, which I do not think is reviewed from a security standpoint).
+### Important note on deployment
+The R code is run on the server (real server, the one in "the cloud") NOT INSIDE THE JS CONSOLE OF THE BROWSER (as I (Giorgio) originally thought)! So you need to install all the R dependencies on the server. This scares me a little when thinking to real world deploymnet, aka not on a laptop but on server with a public IP, because of possible security problems in case of bugs and exploit in the R code, which I do not think is reviewed from a security standpoint.
 
-Other remarks:
-The following lines where written before opening the solution on the tutorial page. I am including them here, even if not strictly necessary, because I put original work in this tutorial and I think this is the whole point of the assignment. The code reflects this process.
-The R Switch statement is kind of limited. If you want to set multiple variables you need multiple switches, which means that in the case you want to change the label you must change everything -> not so good.
-It also seems very difficult to use the switch to return a list and assing the content of the list to multiple values. 
-Example in python:
-data,color = counties$White, "darkgreen"
-The solution may require a ton of boilerplate code: https://strugglingthroughproblems.wordpress.com/2010/08/27/matlab-style-multiple-assignment-in%C2%A0r/ or https://stackoverflow.com/questions/7519790/assign-multiple-new-variables-on-lhs-in-a-single-line-in-r
-Our solution was to use a list in a single switch statement, containing the ordered set of arguments. A map would be cool, and then it would be possible to translate the map to the arguments with a kwargs (python) like function (I am sure it is possible but I am not proficient enough with R).
+### Other remarks:
 
-Stock:
+The following lines were written before opening the solution on the tutorial lesson 5. We are including them here, even if not strictly necessary, because we put original work in this tutorial and we think this is the whole point of the assignment. The code reflects this process:
+
+> The R Switch statement is kind of limited. If you want to set multiple variables you need multiple switches, which means that in the case you want to change the label you must change everything -> not so good.
+> It also seems very difficult to use the switch to return a list and assing the content of the list to multiple values. 
+> Example in python:
+> data,color = counties$White, "darkgreen"
+> The solution may require a ton of boilerplate code: https://strugglingthroughproblems.wordpress.com/2010/08/27/matlab-style-multiple-assignment-in%C2%A0r/ or https://stackoverflow.com/questions/7519790/assign-multiple-new-variables-on-lhs-in-a-single-line-in-r
+> Our solution was to use a list in a single switch statement, containing the ordered set of arguments. A map would be cool, and then it would be possible to translate the map to the arguments with a kwargs (python) like function (I am sure it is possible but I am not proficient enough with R).
+
+### Stock:
 Only call a reactive expression from within a reactive or a render*function.
 
-Deployment:
-https://gioruffa.shinyapps.io/tutorial4/
+### Deployment:
+Sninyapp.io: [https://gioruffa.shinyapps.io/tutorial4/](https://gioruffa.shinyapps.io/tutorial4/) this seems to be the faster and more secure solution. Although I try to give it a run to the installation of shinyserver on my linux-box
+
+### Code sharing
+We used github 
+> https://github.com/xmooner/BigDataVisualizationShinyTutorial
