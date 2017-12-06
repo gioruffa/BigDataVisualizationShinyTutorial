@@ -5,7 +5,6 @@ source("helpers.R")
 counties <- readRDS("data/counties.bin") #if we do not plan to modify this df (for every user), it should stay here.
 
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   output$map <- renderPlot({
     legend = ""
